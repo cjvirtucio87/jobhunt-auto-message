@@ -11,7 +11,16 @@ func main() {
 	var cfg data.Config
 	var f *os.File
 	var err error
+
+	if _, err := os.Stat("build"); os.IsNotExist(err) {
+		os.Mkdir("build", os.FileMode(0777))
+	}
+
 	cfg, err = data.FromJson("./config.json")
+
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	tmpl := template.Must(template.New("message.txt").ParseFiles("message.txt"))
 

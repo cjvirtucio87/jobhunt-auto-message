@@ -51,8 +51,6 @@ func FromJson(path string) (Config, error) {
 		return cfg, err
 	}
 
-	fmt.Printf("%s\n", string(raw))
-
 	json.Unmarshal(raw, &cfg)
 
 	return cfg, nil
