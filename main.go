@@ -11,30 +11,30 @@ func main() {
 	var cfg data.Config
 	var f *os.File
 	var err error
+	buildPath := "build"
+	configPath := "./config.json"
+	messagePath := "message.txt"
+	resultPath := "build/result.txt"
+	buildDirMode := 0777
+	resultFileMode := 0666
 
-	if _, err := os.Stat("build"); os.IsNotExist(err) {
-		os.Mkdir("build", os.FileMode(0777))
+	if _, err = os.Stat(buildPath); os.IsNotExist(err) {
+		os.Mkdir(buildPath, os.FileMode(buildDirMode))
 	}
 
-	cfg, err = data.FromJson("./config.json")
-
-	if err != nil {
+	if cfg, err = data.FromJson(configPath); err != nil {
 		log.Fatal(err)
 	}
 
-	tmpl := template.Must(template.New("message.txt").ParseFiles("message.txt"))
+	tmpl := template.Must(template.New(messagePath).ParseFiles(messagePath))
 
-	f, err = os.OpenFile("build/result.txt", os.O_CREATE|os.O_WRONLY, 0666)
-
-	if err != nil {
+	if f, err = os.OpenFile(resultPath, os.O_CREATE|os.O_WRONLY, os.FileMode(resultFileMode)); err != nil {
 		log.Fatal(err)
 	}
 
 	defer f.Close()
 
-	err = tmpl.Execute(f, cfg)
-
-	if err != nil {
+	if err = tmpl.Execute(f, cfg); err != nil {
 		log.Fatal(err)
 	}
 }
