@@ -7,31 +7,15 @@ import (
 	"text/template"
 )
 
-type Role struct {
-	name   string
-	duties string
-}
-
-type User struct {
-	role Role
-	name string
-}
-
-type Company struct {
-	name  string
-	goals string
-}
-
-type Open struct {
-	role Role
-}
-
 func main() {
-	cfg := data.NewMock()
+	var cfg data.Config
+	var f *os.File
+	var err error
+	cfg, err = data.FromJson("./config.json")
 
 	tmpl := template.Must(template.New("message.txt").ParseFiles("message.txt"))
 
-	f, err := os.OpenFile("build/result.txt", os.O_CREATE|os.O_WRONLY, 0666)
+	f, err = os.OpenFile("build/result.txt", os.O_CREATE|os.O_WRONLY, 0666)
 
 	if err != nil {
 		log.Fatal(err)

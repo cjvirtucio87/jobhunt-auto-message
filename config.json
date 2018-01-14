@@ -1,0 +1,19 @@
+{
+  "User": {
+    "Role": {
+      "Name": "Content Specialist",
+      "Duties": "writing SQL queries for data engineers"
+    },
+    "Name": "Dev Developerson"
+  },
+  "Open": {
+    "Role": {
+      "Name": "SQL Developer",
+      "Duties": "write SQL queries and administer a database"
+    },
+    "Company": {
+      "Name": "Aces, Inc.",
+      "Goals": "developing robust solutions for non-trivial problems in the security space"
+    }
+  }
+}

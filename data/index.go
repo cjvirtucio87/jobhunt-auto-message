@@ -1,5 +1,11 @@
 package data
 
+import (
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+)
+
 type Role struct {
 	Name   string
 	Duties string
@@ -35,4 +41,19 @@ func NewMock() Config {
 	open := Open{openRole, openCompany}
 
 	return Config{user, open}
+}
+
+func FromJson(path string) (Config, error) {
+	var cfg Config
+	raw, err := ioutil.ReadFile(path)
+
+	if err != nil {
+		return cfg, err
+	}
+
+	fmt.Printf("%s\n", string(raw))
+
+	json.Unmarshal(raw, &cfg)
+
+	return cfg, nil
 }
